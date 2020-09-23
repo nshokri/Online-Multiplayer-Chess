@@ -1,0 +1,7 @@
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\bin\Debug\Chess Server.exe.config
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\bin\Debug\Chess Server.exe
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\bin\Debug\Chess Server.pdb
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\obj\Debug\Chess Server.csprojAssemblyReference.cache
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\obj\Debug\Chess Server.csproj.CoreCompileInputs.cache
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\obj\Debug\Chess Server.exe
+C:\Users\Nick\Desktop\Coding\Eclipse Projects\C# Chess Server\Chess Server\Chess Server\obj\Debug\Chess Server.pdb
