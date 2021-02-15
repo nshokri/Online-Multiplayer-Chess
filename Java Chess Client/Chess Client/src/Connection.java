@@ -20,13 +20,13 @@ public class Connection
 	
 	private PrintWriter writer;
 	private BufferedReader reader;
-	
-	private Stages stage = Stages.Unconnected;
-	
+
 	private enum Stages
 	{
 		Unconnected, Connected, GameInprogress, GameEnd
 	}
+
+	private Stages stage = Stages.Unconnected;
 	
 	public Connection(Game game)
 	{

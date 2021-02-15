@@ -33,7 +33,8 @@ public class Window extends JComponent
 	public Window(int width, int height, Game game)
 	{
 		window = new JFrame();
-		
+
+		// Set basic window properties
 		window.setSize(width, height);
 		window.setTitle("Chess");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,15 +46,18 @@ public class Window extends JComponent
 		
 		squareWidth = (window.getWidth() / Game.BOARD_WIDTH) - 1;
 		squareHeight = (window.getHeight() / Game.BOARD_HEIGHT) - 4;
-		
+
+		// Attach the instance a game and connection that this window will be operating with
 		this.game = game;
 		this.connection = new Connection(game);
-		
+
+		// Run the connection on a separate thread so that one does not block the other (they both require while loops)
 		connectionThread = new Thread(new Runnable()
 		{
 			public void run()
 			{
-				while (game.isOver() == 0)
+				// game.getWinner() will return either 1 or -1 once the game is done and a winner is decided
+				while (game.getWinner() == 0)
 				{
 					connection.process();
 					window.repaint();
@@ -65,28 +69,31 @@ public class Window extends JComponent
 		connectionThread.start();
 		
 		this.board = game.getBoard();
-		
+
+		// Create a listener to detect when a mouse click occurs on the window
 		this.addMouseListener(new MouseAdapter()
 		{
 			public void mousePressed(MouseEvent e)
 			{
-				
+				// If it is a left click and it is the user's turn to move
 				if (e.getButton() == MouseEvent.BUTTON1 && game.getUser() == game.getTurn())
 				{
-					int oldX = x;
+					int oldX = x; // todo: it would make more sense if we moved this to the else right???
 					int oldY = y;
 					
 					//Find click location on board
 					x = (int) Math.floor((int) (e.getX() + 0.0 / window.getWidth()) / 100);
 					y = (int) Math.floor((int) (e.getY() + 0.0 / window.getHeight()) / 100);
-				
+
 					ArrayList<ChessPiece> validMoves = null;
-					
+
+					// Second click -- user selects where the piece should move
 					if (moving == true)
 					{
+						// Get all legal moves that the current selected piece can move
 						validMoves = game.getAllValidMoves(oldX, oldY);
 						
-						//Check for valid move
+						// Check to see if the player's move is valid
 						for (ChessPiece n : validMoves)
 						{
 							if (x == n.getX() && y == n.getY())
@@ -95,20 +102,24 @@ public class Window extends JComponent
 								connection.sendMove(oldX, oldY, x, y);
 							}
 						}
-						
+
+						// Reset all vars (back to the first click stage)
 						x = -1;
 						y = -1;
 						moving = false;
 						
 					}
+					// First click -- user selects which piece should be moved
 					else
 					{
+						// If the player clicked on a spot with no piece, remove the highlighted spot on the board
 						if (board[x][y] == null)
 						{
 							x = -1;
 							y = -1;
 							moving = false;
 						}
+						// The user has selected a piece to move
 						else
 						{
 							moving = true;
@@ -118,7 +129,8 @@ public class Window extends JComponent
 				}
 			} 
 		});
-		
+
+		// Add the mouse listener to the current window
 		window.add(this);
 		window.revalidate();
 		
@@ -128,16 +140,18 @@ public class Window extends JComponent
 	{
 		super.paintComponent(g);
 		Graphics2D g2 =  (Graphics2D) g;
-		
-		if (game.isOver() != 0)
+
+		// NOTE: this is essentially a while loop because paintComponent() gets called each frame
+		if (game.getWinner() != 0)
 		{
 			try
 			{
 				connection.process();
 				//connection.endConnection();
 				//connectionThread.join();
-				
-				if (game.getUser() == game.isOver())
+
+				// Tell the user the out come
+				if (game.getUser() == game.getWinner())
 				{
 					System.out.println("You Win!");
 				}
@@ -145,7 +159,8 @@ public class Window extends JComponent
 				{
 					System.out.println("You Lost!");
 				}
-				
+
+				// Close the window
 				window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 			}
 			catch (Exception e)

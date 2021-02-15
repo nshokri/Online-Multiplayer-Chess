@@ -11,21 +11,20 @@ import Pieces.Rook;
 
 public class Game
 {
+	// todo: implement checkmate
 	//Can change these for experimenting
 	public static final int BOARD_WIDTH = 8;
 	public static final int BOARD_HEIGHT = 8;
 	
 	private ChessPiece[][] board;
 	private int turn;
-	
+
 	private int user;
 	
     private int winner = 0;
 	
 	public Game()
 	{
-	
-		
 		board = new ChessPiece[BOARD_WIDTH][BOARD_HEIGHT];
 		turn = -1;
 		
@@ -754,7 +753,7 @@ public class Game
 		return turn;
 	}
 	
-	public int isOver()
+	public int getWinner()
 	{
 		return winner;
 	}
