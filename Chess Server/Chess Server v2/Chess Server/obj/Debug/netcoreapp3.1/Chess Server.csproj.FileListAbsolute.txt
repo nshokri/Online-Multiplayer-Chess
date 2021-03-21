@@ -1,0 +1,13 @@
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.csprojAssemblyReference.cache
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.AssemblyInfoInputs.cache
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.AssemblyInfo.cs
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.csproj.CoreCompileInputs.cache
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\bin\Debug\netcoreapp3.1\Chess Server.exe
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\bin\Debug\netcoreapp3.1\Chess Server.deps.json
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\bin\Debug\netcoreapp3.1\Chess Server.runtimeconfig.json
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\bin\Debug\netcoreapp3.1\Chess Server.runtimeconfig.dev.json
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\bin\Debug\netcoreapp3.1\Chess Server.dll
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\bin\Debug\netcoreapp3.1\Chess Server.pdb
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.dll
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.pdb
+C:\Users\nshok\Desktop\Code\Java Chess\Online-Multiplayer-Chess\Chess Server\Chess Server v2\Chess Server\obj\Debug\netcoreapp3.1\Chess Server.genruntimeconfig.cache
