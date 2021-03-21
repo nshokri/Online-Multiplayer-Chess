@@ -8,13 +8,15 @@ import javax.imageio.ImageIO;
 
 public abstract class ChessPiece
 {
-	protected int player; //Which player owns this piece (should be -1 or 1)
+	private int player; // Which player owns this piece (should be -1 or 1)
 
-	protected int x;
-	protected int y;
+	private int x;
+	private int y;
 	
 	protected String whiteName;
 	protected String blackName;
+
+	protected String pathToAssets = "src/Assets/";
 	
 	public ChessPiece(int x, int y, int player)
 	{

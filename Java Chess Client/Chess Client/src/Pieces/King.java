@@ -6,8 +6,8 @@ public class King extends ChessPiece
 	public King(int x, int y, int player)
 	{
 		super(x, y, player);
-		this.whiteName = "wk.png";
-		this.blackName = "bk.png";
+		this.whiteName = this.pathToAssets + "wk.png";
+		this.blackName = this.pathToAssets + "bk.png";
 	}
 
 }

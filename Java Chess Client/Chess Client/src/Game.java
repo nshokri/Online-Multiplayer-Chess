@@ -11,26 +11,26 @@ import Pieces.Rook;
 
 public class Game
 {
+	// todo: implement checkmate
 	//Can change these for experimenting
 	public static final int BOARD_WIDTH = 8;
 	public static final int BOARD_HEIGHT = 8;
 	
 	private ChessPiece[][] board;
 	private int turn;
-	
 	private int user;
-	
     private int winner = 0;
-	
+
+	private Connection connection;
+
 	public Game()
 	{
-	
-		
 		board = new ChessPiece[BOARD_WIDTH][BOARD_HEIGHT];
 		turn = -1;
-		
-		/*Generate board*/
 
+		connection = new Connection(this);
+
+		/*Generate board*/
 		/**Pawns**/
 		//Black
 		for (int i = 0; i < BOARD_WIDTH; i++)
@@ -583,6 +583,7 @@ public class Game
 				else if (board[x][y + i].getPlayer() != turn)
 				{
 					moves.add(new Queen(x, y + i, turn));
+					break;
 				}
 				else
 				{
@@ -604,6 +605,7 @@ public class Game
 				else if (board[x][y - i].getPlayer() != turn)
 				{
 					moves.add(new Queen(x, y - i, turn));
+					break;
 				}
 				else
 				{
@@ -625,6 +627,7 @@ public class Game
 				else if (board[x + i][y].getPlayer() != turn)
 				{
 					moves.add(new Queen(x + i, y, turn));
+					break;
 				}
 				else
 				{
@@ -646,6 +649,7 @@ public class Game
 				else if (board[x - i][y].getPlayer() != turn)
 				{
 					moves.add(new Queen(x - i, y, turn));
+					break;
 				}
 				else
 				{
@@ -754,7 +758,7 @@ public class Game
 		return turn;
 	}
 	
-	public int isOver()
+	public int getWinner()
 	{
 		return winner;
 	}
@@ -763,4 +767,6 @@ public class Game
 	{
 		this.winner = win;
 	}
+
+	public Connection getConnection() { return connection; }
 }

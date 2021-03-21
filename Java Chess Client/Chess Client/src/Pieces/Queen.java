@@ -6,8 +6,8 @@ public class Queen extends ChessPiece
 	public Queen(int x, int y, int player)
 	{
 		super(x, y, player);
-		this.whiteName = "wq.png";
-		this.blackName = "bq.png";
+		this.whiteName = this.pathToAssets + "wq.png";
+		this.blackName = this.pathToAssets + "bq.png";
 	}
 
 }

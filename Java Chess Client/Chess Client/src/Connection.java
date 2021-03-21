@@ -20,13 +20,19 @@ public class Connection
 	
 	private PrintWriter writer;
 	private BufferedReader reader;
-	
-	private Stages stage = Stages.Unconnected;
-	
-	private enum Stages
+
+	private final boolean DEBUG = true;
+	private boolean sent = false;
+
+	private double startTime;
+	private double endTime;
+
+	public enum Stages
 	{
 		Unconnected, Connected, GameInprogress, GameEnd
 	}
+
+	private Stages stage = Stages.Unconnected;
 	
 	public Connection(Game game)
 	{
@@ -40,60 +46,6 @@ public class Connection
 
     		//Receive
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            /*String message = "";
-            
-            
-            //Wait for connection to be accepted
-            do
-            {
-            	message = reader.readLine();
-            	if (message == null)
-            	{
-            		message = "";
-            	}
-            	else
-            	{
-            		System.out.println(message);
-            	}
-            }
-            while (!message.equals("Connection Accepted!"));
-           
-        	
-        	System.out.println("3");
-        	
-        	//Wait for game to start
-        	do
-            {
-            	message = reader.readLine();
-            	if (message == null)
-            	{
-            		message = "";
-            	}
-            	else
-            	{
-            		System.out.println(message);
-            	}
-            }
-            while (!message.equals("Starting..."));
-
-        	
-        	//Get board and changes
-        	do
-            {
-            	message = reader.readLine();
-            	
-            	if (message == null)
-            	{
-            		message = "";
-            	}
-            	else if (message.substring(0, 2).equals("/S"))
-            	{
-            		//System.out.println(message);
-            		updateBoard(message, game);
-            	}
-            }
-            while (!message.equals("Updated"));
-        	*/
         } 
         catch (Exception e)
         {
@@ -104,7 +56,21 @@ public class Connection
 	
 	public void process()
 	{
+		if (DEBUG && sent)
+		{
+			endTime = System.currentTimeMillis();
+			System.out.println("Round-Trip Time = " + (endTime - startTime) + "ms");
+			sent = false;
+		}
+
 		String message = null;
+
+		// Opponent disconnected or we are done communicating with server
+		if (stage == null)
+		{
+			return;
+		}
+
 		try
 		{
 			message = reader.readLine();
@@ -113,11 +79,16 @@ public class Connection
 		{
 			e.printStackTrace();
 		}
+
+		if (message == null)
+		{
+			return;
+		}
 		
 		//Stages
 		if (stage == Stages.Unconnected)
 		{
-			if (message != null && message.equals("Connection Accepted!"))
+			if (message.equals("Connection Accepted!"))
 			{
 				System.out.println(message);
 				stage = Stages.Connected;
@@ -125,29 +96,44 @@ public class Connection
 		}
 		else if (stage == Stages.Connected)
 		{
-			if (message != null && message.substring(0, message.indexOf(" ")).equals("Starting..."))
+			if (message.substring(0, message.indexOf(" ")).equals("Starting..."))
 			{
-				System.out.println(Integer.parseInt(message.substring(message.indexOf(" ") + 1)));
-				game.setUser(Integer.parseInt(message.substring(message.indexOf(" ") + 1)));
+				int playerNum = Integer.parseInt(message.substring(message.indexOf(" ") + 1)); // -1 is white, 1 is black
+				System.out.println(playerNum);
+				game.setUser(playerNum);
 				stage = Stages.GameInprogress;
 			}
 		}
 		else if (stage == Stages.GameInprogress)
 		{
-			//System.out.println(message.substring(0, 2));
-			if (message != null && message.substring(0, 2).equals("/S"))
+
+			if (message.substring(0, 2).equals("/S"))
         	{
         		updateBoard(message, game);
         	}
+			else if (message.substring(0, 2).equals("/D"))
+			{
+				System.out.println("Opponent has disconnected! You win by default.");
+				game.setWinner(game.getUser());
+				stage = null;
+				this.endConnection();
+			}
 		}
 		else if (stage == Stages.GameEnd)
 		{
 			this.endConnection();
+			stage = null;
 		}
 	}
 	
 	public void sendMove(int oldX, int oldY, int newX, int newY)
 	{
+		if (DEBUG && !sent)
+		{
+			startTime = System.currentTimeMillis();
+			sent = true;
+		}
+
 		writer.println("Move: " + oldX + " " + oldY + " " + newX + " " + newY);
 		writer.flush();
 	}
@@ -156,9 +142,10 @@ public class Connection
 	{
         try 
         {
-        	System.out.println("Connection Closed!");
     		writer.close();
 			socket.close();
+
+			System.out.println("Connection Closed!");
 		} 
         catch (IOException e)
         {
@@ -259,7 +246,12 @@ public class Connection
 		{
 			game.nextTurn();
 		}
-		
+
+		// A king has died
+		if (stage == Stages.GameEnd)
+		{
+			process();
+		}
 		/*
 		if (game.getUser() != game.getTurn())
 		{
@@ -268,5 +260,10 @@ public class Connection
 		
 		//System.out.println("Updated");
 		//System.out.println("TURN: " + game.getTurn());
+	}
+
+	public Stages getStage()
+	{
+		return stage;
 	}
 }
